@@ -15,6 +15,7 @@ class OvertimeRequest extends Model
         'date',
         'start_time',
         'end_time',
+        'reason',
         'status',
         'approved_by'
     ];
