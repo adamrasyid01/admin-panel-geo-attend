@@ -40,7 +40,7 @@ class LeaveRequestResource extends Resource
                         titleAttribute: 'name', // Kolom yang ditampilkan dari tabel User
 
                         // 3. Tambahkan fungsi untuk memodifikasi query
-                        modifyQueryUsing: fn(Builder $query) => $query->whereHas('role', fn(Builder $query) => $query->where('name', 'karyawan'))
+                        modifyQueryUsing: fn(Builder $query) => $query->whereHas('roles', fn(Builder $query) => $query->where('name', 'karyawan'))
                     )
                     ->searchable() // Disarankan agar mudah mencari nama
                     ->preload()

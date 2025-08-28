@@ -2,26 +2,25 @@
 
 namespace App\Models;
 
+// Impor model Role dari paket Spatie
+use Spatie\Permission\Models\Role as SpatieRole;
+
+// Impor trait jika Anda ingin menambahkannya, seperti SoftDeletes
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Role extends Model
 {
-    //
-    use HasFactory, SoftDeletes;
-    protected $fillable = [
-        'name',
-    ];
+    // Tambahkan trait di sini jika diperlukan.
+    // Catatan: Spatie sudah mengurus HasFactory
+    // Jadi Anda hanya perlu menambahkan SoftDeletes jika Anda menggunakannya
+    
 
-    /**
-     * Get the users associated with the role.
-     */
     public function users() : HasMany
     {
         return $this->hasMany(User::class, 'role_id');
     }
-    
+
 }

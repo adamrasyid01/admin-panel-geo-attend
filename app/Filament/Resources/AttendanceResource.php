@@ -41,7 +41,7 @@ class AttendanceResource extends Resource
                     ->relationship(
                         name: 'user',
                         titleAttribute: 'name',
-                        modifyQueryUsing: fn(Builder $query) => $query->whereHas('role', fn(Builder $query) => $query->where('name', 'karyawan'))
+                        modifyQueryUsing: fn(Builder $query) => $query->whereHas('roles', fn(Builder $query) => $query->where('name', 'karyawan'))
                     )
                     ->searchable()
                     ->preload()

@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->foreignId('role_id')->default(1)->constrained()->cascadeOnDelete();
             $table->string('face_embedding_id')->default('not_registered');
             $table->rememberToken();
             $table->softDeletes();

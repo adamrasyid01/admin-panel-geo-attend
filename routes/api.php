@@ -3,7 +3,10 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AttendanceController;
+use App\Http\Controllers\Api\DiskonController;
+use App\Http\Controllers\Api\OjolController;
 use App\Http\Controllers\Api\OvertimeRequestController;
+use App\Http\Controllers\Api\PajakController;
 use App\Http\Controllers\Api\UserController;
 
 // AUTH API
@@ -28,3 +31,14 @@ Route::prefix('attendances')->middleware('auth:sanctum')->name('attendances.')->
 Route::prefix('overtime-requests')->middleware('auth:sanctum')->name('overtime-requests.')->group(function () {
     Route::post('/', [OvertimeRequestController::class, 'createOvertimeRequest']);
 });
+
+// Pajak Controller
+// Route::post('/hitung-pajak', [PajakController::class, 'hitung']);
+
+// Diskon
+// Route::post('/hitung-diskon', [DiskonController::class, 'hitung']);
+
+// Ojol
+// Route::post('/hitung-ojol', [OjolController::class, 'hitung']);
+
+

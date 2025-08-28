@@ -40,7 +40,7 @@ class CompanyLocationResource extends Resource
                         titleAttribute: 'name', // Kolom nama dari tabel User
 
                         // Fungsi untuk memfilter daftar user yang akan ditampilkan
-                        modifyQueryUsing: fn(Builder $query) => $query->whereHas('role', fn(Builder $query) => $query->where('name', 'admin'))
+                        modifyQueryUsing: fn(Builder $query) => $query->whereHas('roles', fn(Builder $query) => $query->where('name', 'super_admin'))
                     )
                     ->searchable()
                     ->preload()

@@ -45,37 +45,39 @@ class UserResource extends Resource
                     ->required()
                     ->label('Password')
                     ->password(),
-                Select::make('role_id')
-                    ->relationship('role', 'name')->required()->live(),
+                Select::make('roles')
+                    ->relationship('roles', 'name')
+                    ->multiple()
+                    ->preload()
+                    ->reactive(),
                 FileUpload::make('face_embedding_id')
                     ->label('Face Embedding ID')
                     ->required()
                     ->acceptedFileTypes(['image/*'])
                     ->maxSize(1024), // 1MB
 
-                Repeater::make('userShifts')->relationship()
+                Repeater::make('userShifts')
+                    ->relationship()
                     ->schema([
                         Select::make('shift_id')
                             ->relationship('shift', 'name')
-                            ->required()->label('Tambahkan Shift Karyawan'),
-
+                            ->required()
+                            ->label('Tambahkan Shift Karyawan'),
                     ])
-                    ->disabled(function (callable $get) {
-                        // Ambil role_id yang sedang dipilih
-                        $roleId = $get('role_id');
+                    ->visible(function (callable $get) {
+                        $roleIds = $get('roles'); // array role_id dari select
 
-                        // Jika tidak ada role yang dipilih, sembunyikan repeater
-                        if (!$roleId) {
-                            return true;
+                        if (empty($roleIds)) {
+                            return false;
                         }
 
-                        // Cari nama role berdasarkan ID
-                        $roleName = Role::find($roleId)?->name;
+                        // Ambil semua nama role dari database
+                        $roleNames = Role::where('id', $roleIds)->pluck('name');
 
-                        // Sembunyikan jika nama role adalah 'admin'
-                        // Tampilkan jika nama role adalah 'karyawan' atau lainnya
-                        return $roleName === 'admin';
-                    })
+                        // Hanya tampilkan kalau salah satu role adalah "karyawan"
+                        return $roleNames->contains('karyawan');
+                    }),
+
             ]);
     }
 
@@ -93,7 +95,7 @@ class UserResource extends Resource
                     ->label('Email'),
                 // Di dalam method table() di UserResource.php
 
-                TextColumn::make('role.name') // <-- UBAH DI SINI
+                TextColumn::make('roles.name') // <-- UBAH DI SINI
                     ->label('Role')
                     ->sortable() // Opsional, agar bisa di-sort
                     ->searchable(), // Opsional, agar bisa di-searchr

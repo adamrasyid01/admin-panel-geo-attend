@@ -10,9 +10,20 @@ use Illuminate\Support\Facades\Auth;
 class ReportController extends Controller
 {
     //Dapatkan laporan dari user yang login
-    public function getYourReport(){
+    public function getYourReport(Request $request){
         $user = Auth::user();
-        $reports = $user->leaveRequests()->get();
+
+        
+        if($request->has('status')) {
+            $reports = $user->leaveRequests()->where('status', $request->input('status'))->get();
+        } else {
+            $reports = $user->leaveRequests()->get();
+        }
         return ResponseFormatter::success($reports, 'Your report retrieved successfully.');
     }
+
+    // QUERY PARAMS UNTUK FILTER TYPE
+    
+    // QUERY PARAMS UNTUK SEMUA,PENDING
+
 }
