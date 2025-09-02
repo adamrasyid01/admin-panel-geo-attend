@@ -32,13 +32,3 @@ Route::prefix('overtime-requests')->middleware('auth:sanctum')->name('overtime-r
     Route::post('/', [OvertimeRequestController::class, 'createOvertimeRequest']);
 });
 
-// Pajak Controller
-// Route::post('/hitung-pajak', [PajakController::class, 'hitung']);
-
-// Diskon
-// Route::post('/hitung-diskon', [DiskonController::class, 'hitung']);
-
-// Ojol
-// Route::post('/hitung-ojol', [OjolController::class, 'hitung']);
-
-

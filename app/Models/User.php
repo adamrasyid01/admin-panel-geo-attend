@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -14,7 +15,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -83,5 +84,35 @@ class User extends Authenticatable
     public function approvedOvertimeRequests() : HasMany
     {
         return $this->hasMany(OvertimeRequest::class, 'approved_by');
+    }
+
+    public function announcements() : HasMany
+    {
+        return $this->hasMany(Announcement::class, 'user_id');
+    }
+
+    public function notes() : HasMany
+    {
+        return $this->hasMany(Note::class, 'user_id');
+    }
+
+    public function wfhRequests() : HasMany
+    {
+        return $this->hasMany(WfhRequest::class, 'user_id');
+    }
+
+    public function approvedWfhRequests() : HasMany
+    {
+        return $this->hasMany(WfhRequest::class, 'approved_by');
+    }
+
+    public function tasks() : HasMany
+    {
+        return $this->hasMany(Task::class, 'user_id');
+    }
+
+    public function position() : BelongsTo
+    {
+        return $this->belongsTo(Position::class, 'role_id');
     }
 }

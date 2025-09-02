@@ -2,27 +2,24 @@
 
 namespace App\Models;
 
-
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class OvertimeRequest extends Model
+class WfhRequest extends Model
 {
-    use SoftDeletes;
     //
+    use SoftDeletes;
     protected $fillable = [
         'user_id',
-        'date',
-        'start_time',
-        'end_time',
+        'tanggal',
         'reason',
         'status',
-        'approved_by'
+        'approved_by',
+        'admin_notes'
     ];
 
-    public function user(): BelongsTo
+public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
     }
@@ -32,5 +29,4 @@ class OvertimeRequest extends Model
         return $this->belongsTo(User::class, 'approved_by');
     }
 
-    
 }
