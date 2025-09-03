@@ -19,6 +19,7 @@ return new class extends Migration
             $table->enum('status', ['pending', 'approved', 'rejected']);
             $table->foreignId('approved_by')->nullable()->constrained('users')->cascadeOnDelete();
             $table->text('admin_notes');
+            $table->foreign('admin_notes')->references('id')->on('users')->cascadeOnDelete();
             $table->softDeletes();
             $table->timestamps();
         });
@@ -30,5 +31,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('wfh_requests');
+        Schema::table('wfh_requests', function (Blueprint $table) {
+            $table->drop(['approved_by']);
+        });
     }
 };
