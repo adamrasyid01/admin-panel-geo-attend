@@ -16,10 +16,11 @@ class WfhRequest extends Model
         'reason',
         'status',
         'approved_by',
-        'admin_notes'
+        'admin_notes',
+        'notes_by'
     ];
 
-public function user(): BelongsTo
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
     }
@@ -29,4 +30,8 @@ public function user(): BelongsTo
         return $this->belongsTo(User::class, 'approved_by');
     }
 
+    public function notesBy(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'notes_by');
+    }
 }

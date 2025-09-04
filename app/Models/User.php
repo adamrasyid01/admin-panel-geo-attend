@@ -115,4 +115,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Position::class, 'role_id');
     }
+
+    public function notesBy() : HasMany
+    {
+        return $this->hasMany(Note::class, 'notes_by');
+    }
 }

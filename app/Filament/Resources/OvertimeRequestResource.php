@@ -25,7 +25,7 @@ class OvertimeRequestResource extends Resource
 {
     protected static ?string $model = OvertimeRequest::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'mdi-hours-24';
 
     protected static ?string $navigationGroup = 'Manajemen Perizinan';
 

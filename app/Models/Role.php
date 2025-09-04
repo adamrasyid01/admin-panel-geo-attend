@@ -16,7 +16,7 @@ class Role extends Model
     // Tambahkan trait di sini jika diperlukan.
     // Catatan: Spatie sudah mengurus HasFactory
     // Jadi Anda hanya perlu menambahkan SoftDeletes jika Anda menggunakannya
-    use SoftDeletes;
+    // use SoftDeletes;
 
     public function users() : HasMany
     {

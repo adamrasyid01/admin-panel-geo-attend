@@ -29,7 +29,7 @@ class AttendanceResource extends Resource
 
     protected static ?string $navigationIcon = 'fluentui-presence-available-10';
 
-    protected static ?string $navigationGroup = 'Manajemen Kantor';
+    protected static ?string $navigationGroup = 'Manajemen Pengguna';
 
 
 

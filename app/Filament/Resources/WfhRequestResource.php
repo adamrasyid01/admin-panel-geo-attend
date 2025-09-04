@@ -9,12 +9,14 @@ use Dom\Text;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -24,14 +26,15 @@ class WfhRequestResource extends Resource
 {
     protected static ?string $model = WfhRequest::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'gmdi-add-home-work-tt';
+     protected static ?string $navigationGroup = 'Manajemen Perizinan';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 //
-               Select::make('user_id')
+                Select::make('user_id')
                     ->relationship(
                         name: 'user', // Nama relasi di model saat ini
                         titleAttribute: 'name', // Kolom yang ditampilkan dari tabel User
@@ -72,14 +75,30 @@ class WfhRequestResource extends Resource
                     })
                     ->hiddenOn('create'), // Tetap disembunyikan saat create
 
-                // 2. TAMBAHKAN FIELD UNTUK MENAMPILKAN 'APPROVED_BY'
+                Textarea::make('admin_notes')
+                    ->label('Catatan Admin')
+                    ->columnSpanFull() // Agar field ini memakan lebar penuh
+                    ->hiddenOn('create'),
                 Select::make('approved_by')
                     ->label('Disetujui Oleh')
                     ->relationship('approvedBy', 'name') // Menggunakan relasi yang sudah dibuat
-                    ->disabled() // Field ini tidak bisa diubah manual
+
                     ->dehydrated() // Pastikan nilainya tetap tersimpan meski disabled
                     // 3. SEMBUNYIKAN SECARA KONDISIONAL
-                    ->hidden(fn(Get $get) => $get('status') !== 'approved')
+                    ->hidden(fn(Get $get) => $get('status') !== 'approved'),
+
+                Select::make('notes_by')
+                    ->label('Pemberi Catatan')
+                    ->relationship(
+                        name: 'notesBy', // Nama relasi di model saat ini
+                        titleAttribute: 'name', // Kolom yang ditampilkan dari tabel User
+
+                        // 3. Tambahkan fungsi untuk memodifikasi query
+                        modifyQueryUsing: fn(Builder $query) => $query->whereHas('roles', fn(Builder $query) => $query->where('name', 'super_admin'))
+                    )
+                    ->dehydrated() // Pastikan nilainya tetap tersimpan meski disabled
+                    ->hidden(fn(Get $get) => empty($get('admin_notes'))), // Hanya tampilkan jika ada catatan
+
             ]);
     }
 
@@ -88,6 +107,28 @@ class WfhRequestResource extends Resource
         return $table
             ->columns([
                 //
+                TextColumn::make('id')->label('No'),
+                TextColumn::make('user.name')->label('Karyawan'),
+                TextColumn::make('status')
+                    ->label('Status')
+                    ->color(fn(string $state): string => match ($state) {
+                        'pending' => 'warning',
+                        'approved' => 'success',
+                        'rejected' => 'danger',
+                    }),
+                TextColumn::make('approvedBy.name')
+                    ->label('Disetujui Oleh')
+                    ->default('-')
+                    // Ganti `LeaveRequest $record` menjadi `?LeaveRequest $record`
+                    // dan tambahkan pengecekan null
+                    ->hidden(function (?WfhRequest $record): bool {
+                        // Jika tidak ada record (misal: saat render header), JANGAN sembunyikan kolom
+                        if ($record === null) {
+                            return false;
+                        }
+                        // Jalankan logika seperti biasa jika ada record
+                        return $record->status !== 'approved';
+                    }),
             ])
             ->filters([
                 //

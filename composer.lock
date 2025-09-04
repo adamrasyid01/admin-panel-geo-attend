@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b2f9f56002aa70d00949fffc274b6082",
+    "content-hash": "aee85bfb2513a64449166dfbf2c4604b",
     "packages": [
         {
             "name": "afsakar/filament-leaflet-map-picker",
@@ -389,6 +389,71 @@
             "time": "2025-02-13T20:35:06+00:00"
         },
         {
+            "name": "blade-ui-kit/blade-zondicons",
+            "version": "1.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/codeat3/blade-zondicons.git",
+                "reference": "7ad98e7a3ec57d929cabe5b57c96d56fe6b84f00"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/codeat3/blade-zondicons/zipball/7ad98e7a3ec57d929cabe5b57c96d56fe6b84f00",
+                "reference": "7ad98e7a3ec57d929cabe5b57c96d56fe6b84f00",
+                "shasum": ""
+            },
+            "require": {
+                "blade-ui-kit/blade-icons": "^1.1",
+                "illuminate/support": "^8.0|^9.0|^10.0|^11.0|^12.0",
+                "php": "^7.4|^8.0"
+            },
+            "require-dev": {
+                "codeat3/blade-icon-generation-helpers": "^0.10",
+                "codeat3/phpcs-styles": "^1.0",
+                "orchestra/testbench": "^6.0|^7.0|^8.0|^9.0|^10.0",
+                "phpunit/phpunit": "^9.0|^10.5|^11.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "BladeUI\\Zondicons\\BladeZondiconsServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "BladeUI\\Zondicons\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dries Vints",
+                    "homepage": "https://driesvints.com"
+                },
+                {
+                    "name": "Swapnil Sarwe",
+                    "homepage": "https://swapnilsarwe.com"
+                }
+            ],
+            "description": "A package to easily make use of Zondicons in your Laravel Blade views.",
+            "homepage": "https://github.com/codeat3/blade-zondicons",
+            "keywords": [
+                "Zondicons",
+                "blade",
+                "laravel"
+            ],
+            "support": {
+                "issues": "https://github.com/codeat3/blade-zondicons/issues",
+                "source": "https://github.com/codeat3/blade-zondicons"
+            },
+            "time": "2025-02-26T12:06:57+00:00"
+        },
+        {
             "name": "brick/math",
             "version": "0.12.3",
             "source": {
@@ -588,6 +653,150 @@
                 }
             ],
             "time": "2025-02-25T07:30:15+00:00"
+        },
+        {
+            "name": "codeat3/blade-google-material-design-icons",
+            "version": "1.20.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/codeat3/blade-google-material-design-icons.git",
+                "reference": "15fe382419813293a052ffe08c646d3eadfbd195"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/codeat3/blade-google-material-design-icons/zipball/15fe382419813293a052ffe08c646d3eadfbd195",
+                "reference": "15fe382419813293a052ffe08c646d3eadfbd195",
+                "shasum": ""
+            },
+            "require": {
+                "blade-ui-kit/blade-icons": "^1.1",
+                "illuminate/support": "^8.0|^9.0|^10.0|^11.0|^12.0",
+                "php": "^7.4|^8.0"
+            },
+            "require-dev": {
+                "codeat3/blade-icon-generation-helpers": "^0.10",
+                "codeat3/phpcs-styles": "^1.0",
+                "orchestra/testbench": "^6.0|^7.0|^8.0|^9.0|^10.0",
+                "phpunit/phpunit": "^9.0|^10.5|^11.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Codeat3\\BladeGoogleMaterialDesignIcons\\BladeGoogleMaterialDesignIconsServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Codeat3\\BladeGoogleMaterialDesignIcons\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Swapnil Sarwe",
+                    "homepage": "https://swapnilsarwe.com"
+                },
+                {
+                    "name": "Dries Vints",
+                    "homepage": "https://driesvints.com"
+                }
+            ],
+            "description": "A package to easily make use of \"Google Fonts Material Icons\" in your Laravel Blade views.",
+            "homepage": "https://github.com/codeat3/blade-google-material-design-icons",
+            "keywords": [
+                "blade",
+                "google",
+                "icons",
+                "laravel",
+                "material"
+            ],
+            "support": {
+                "issues": "https://github.com/codeat3/blade-google-material-design-icons/issues",
+                "source": "https://github.com/codeat3/blade-google-material-design-icons/tree/1.20.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/swapnilsarwe",
+                    "type": "github"
+                }
+            ],
+            "time": "2025-02-25T06:49:30+00:00"
+        },
+        {
+            "name": "codeat3/blade-jam-icons",
+            "version": "1.7.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/codeat3/blade-jam-icons.git",
+                "reference": "4d6db7df68c9f9a6c5794f1a6f2d00f3a46b866b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/codeat3/blade-jam-icons/zipball/4d6db7df68c9f9a6c5794f1a6f2d00f3a46b866b",
+                "reference": "4d6db7df68c9f9a6c5794f1a6f2d00f3a46b866b",
+                "shasum": ""
+            },
+            "require": {
+                "blade-ui-kit/blade-icons": "^1.1",
+                "illuminate/support": "^8.0|^9.0|^10.0|^11.0|^12.0",
+                "php": "^7.4|^8.0"
+            },
+            "require-dev": {
+                "codeat3/blade-icon-generation-helpers": "^0.10",
+                "codeat3/phpcs-styles": "^1.0",
+                "orchestra/testbench": "^6.0|^7.0|^8.0|^9.0|^10.0",
+                "phpunit/phpunit": "^9.0|^10.5|^11.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Codeat3\\BladeJamIcons\\BladeJamIconsServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Codeat3\\BladeJamIcons\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Swapnil Sarwe",
+                    "homepage": "https://swapnilsarwe.com"
+                },
+                {
+                    "name": "Dries Vints",
+                    "homepage": "https://driesvints.com"
+                }
+            ],
+            "description": "A package to easily make use of \"Jam Icons\" in your Laravel Blade views.",
+            "homepage": "https://github.com/codeat3/blade-jam-icons",
+            "keywords": [
+                "blade",
+                "jam-icons",
+                "laravel"
+            ],
+            "support": {
+                "issues": "https://github.com/codeat3/blade-jam-icons/issues",
+                "source": "https://github.com/codeat3/blade-jam-icons/tree/1.7.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/swapnilsarwe",
+                    "type": "github"
+                }
+            ],
+            "time": "2025-02-26T08:33:28+00:00"
         },
         {
             "name": "codeat3/blade-pepicons",
@@ -2270,6 +2479,67 @@
                 }
             ],
             "time": "2025-02-03T10:55:03+00:00"
+        },
+        {
+            "name": "khatabwedaa/blade-css-icons",
+            "version": "1.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/khatabwedaa/blade-css-icons.git",
+                "reference": "20bc7a88fb87ffec520e2721d3291290909dd367"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/khatabwedaa/blade-css-icons/zipball/20bc7a88fb87ffec520e2721d3291290909dd367",
+                "reference": "20bc7a88fb87ffec520e2721d3291290909dd367",
+                "shasum": ""
+            },
+            "require": {
+                "blade-ui-kit/blade-icons": "^1.6",
+                "illuminate/support": "^9.0|^10.0|^11.0|^12.0",
+                "php": "^8.0"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^7.0|^8.0|^9.0|^10.0",
+                "phpunit/phpunit": "^9.0|^10.5|^11.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Khatabwedaa\\BladeCssIcons\\BladeCssIconsServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Khatabwedaa\\BladeCssIcons\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Khatab Wedaa",
+                    "email": "khatabwedaa@gmail.com",
+                    "homepage": "https://twitter.com/khatabwedaa",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A package to easily make use of Css.gg in your Laravel Blade views.",
+            "homepage": "https://github.com/khatabwedaa/blade-css-icons",
+            "keywords": [
+                "Css.gg",
+                "blade",
+                "laravel"
+            ],
+            "support": {
+                "issues": "https://github.com/khatabwedaa/blade-css-icons/issues",
+                "source": "https://github.com/khatabwedaa/blade-css-icons/tree/1.5.0"
+            },
+            "time": "2025-02-19T10:49:29+00:00"
         },
         {
             "name": "kirschbaum-development/eloquent-power-joins",
@@ -4254,6 +4524,77 @@
             "time": "2024-07-20T21:41:07+00:00"
         },
         {
+            "name": "postare/blade-mdi",
+            "version": "v1.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/postare/blade-mdi.git",
+                "reference": "4c6c8d0538476d47a47511ae189acd3c8e5969c3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/postare/blade-mdi/zipball/4c6c8d0538476d47a47511ae189acd3c8e5969c3",
+                "reference": "4c6c8d0538476d47a47511ae189acd3c8e5969c3",
+                "shasum": ""
+            },
+            "require": {
+                "blade-ui-kit/blade-icons": "^1.5",
+                "illuminate/support": "^8.0|^9.0|^10.0|^11.0|^12.0",
+                "php": "^8.1"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^7.0|^8.0",
+                "phpunit/phpunit": "^9.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Postare\\BladeMdi\\BladeMdiServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Postare\\BladeMdi\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "inerba",
+                    "homepage": "https://github.com/inerba",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Material Design Icons for Laravel Blade views.",
+            "homepage": "https://github.com/renoki-co/blade-mdi",
+            "keywords": [
+                "blade",
+                "design",
+                "icons",
+                "kit",
+                "laravel",
+                "material",
+                "mdi",
+                "php",
+                "ui"
+            ],
+            "support": {
+                "source": "https://github.com/postare/blade-mdi/tree/v1.1.2"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/renoki-co",
+                    "type": "github"
+                }
+            ],
+            "time": "2025-04-02T08:15:46+00:00"
+        },
+        {
             "name": "psr/cache",
             "version": "3.0.0",
             "source": {
@@ -5067,6 +5408,64 @@
                 }
             ],
             "time": "2025-02-25T09:09:36+00:00"
+        },
+        {
+            "name": "secondnetwork/blade-tabler-icons",
+            "version": "v3.34.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/secondnetwork/blade-tabler-icons.git",
+                "reference": "7d0ccb01eb878cf5a5df306967b59242d3615811"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/secondnetwork/blade-tabler-icons/zipball/7d0ccb01eb878cf5a5df306967b59242d3615811",
+                "reference": "7d0ccb01eb878cf5a5df306967b59242d3615811",
+                "shasum": ""
+            },
+            "require": {
+                "blade-ui-kit/blade-icons": "^1.8",
+                "illuminate/support": "^9.0|^10.0|^11.0|^12.0",
+                "php": "^8.0"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^6.0|^7.0|^9.0",
+                "phpunit/phpunit": "^9.0|^10.0|^11.0|^12.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "secondnetwork\\TablerIcons\\BladeTablerIconsServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "secondnetwork\\TablerIcons\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Andreas Farah"
+                }
+            ],
+            "description": "A package to easily make use of tabler-icons in your Laravel Blade views.",
+            "homepage": "https://github.com/secondnetwork/blade-tabler-icons",
+            "keywords": [
+                "blade",
+                "laravel",
+                "tabler-icons"
+            ],
+            "support": {
+                "issues": "https://github.com/secondnetwork/blade-tabler-icons/issues",
+                "source": "https://github.com/secondnetwork/blade-tabler-icons/tree/v3.34.1"
+            },
+            "time": "2025-07-22T15:28:08+00:00"
         },
         {
             "name": "spatie/color",

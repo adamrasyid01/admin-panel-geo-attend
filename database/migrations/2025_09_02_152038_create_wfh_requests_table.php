@@ -18,8 +18,13 @@ return new class extends Migration
             $table->string('reason');
             $table->enum('status', ['pending', 'approved', 'rejected']);
             $table->foreignId('approved_by')->nullable()->constrained('users')->cascadeOnDelete();
-            $table->text('admin_notes');
-            $table->foreign('admin_notes')->references('id')->on('users')->cascadeOnDelete();
+            $table->foreignId('notes_by')
+                ->nullable()
+                ->constrained('users')
+                ->onDelete('set null'); // Jika user admin dihapus, ID-nya jadi null
+
+            // 2. Kolom untuk menyimpan ISI catatannya
+            $table->text('admin_notes')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
