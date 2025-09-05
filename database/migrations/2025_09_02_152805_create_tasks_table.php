@@ -17,6 +17,10 @@ return new class extends Migration
             $table->string('name');
             $table->text('description');
             $table->dateTime('deadline');
+            $table->foreignId('created_by')
+                ->nullable()
+                ->constrained('users')
+                ->onDelete('set null'); // Jika user admin dihapus, ID-nya jadi null
             $table->timestamps();
             $table->softDeletes();
         });

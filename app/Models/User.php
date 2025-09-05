@@ -120,4 +120,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(Note::class, 'notes_by');
     }
+    public function tasksCreated() : HasMany
+    {
+        return $this->hasMany(Task::class, 'created_by');
+    }
 }
