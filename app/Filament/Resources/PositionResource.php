@@ -6,9 +6,11 @@ use App\Filament\Resources\PositionResource\Pages;
 use App\Filament\Resources\PositionResource\RelationManagers;
 use App\Models\Position;
 use Filament\Forms;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -26,6 +28,11 @@ class PositionResource extends Resource
         return $form
             ->schema([
                 //
+                TextInput::make('name')
+                    ->required()
+                    ->maxLength(255)
+                    ->unique('positions', 'name', ignoreRecord: true) // Memastikan nama posisi unik
+                    ->label('Nama Posisi'),
                 
             ]);
     }
@@ -35,12 +42,19 @@ class PositionResource extends Resource
         return $table
             ->columns([
                 //
+                TextColumn::make('name')
+                    ->label('Nama Posisi')
+                    ->searchable()
+                    ->sortable(),
+
+                
             ])
             ->filters([
                 //
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

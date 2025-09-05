@@ -49,7 +49,24 @@ class UserResource extends Resource
                     ->relationship('roles', 'name')
                     ->multiple()
                     ->preload()
-                    ->reactive(),
+                    ->live(),
+                    
+                Select::make('position_id')
+                    ->label('Posisi Jabatan')
+                    ->relationship('position', 'name') // Asumsi relasi 'position' ada di model User
+                    ->searchable()
+                    ->preload()
+                    ->visible(function (callable $get) {
+                        $roleIds = $get('roles'); // Ambil ID role yang dipilih
+
+                        if (empty($roleIds)) {
+                            return false; // Sembunyikan jika tidak ada role yang dipilih
+                        }
+
+                        // Cek ke database apakah salah satu role yang dipilih adalah 'karyawan'
+                        $roleNames = Role::whereIn('id', $roleIds)->pluck('name');
+                        return $roleNames->contains('Staff');
+                    }),
                 FileUpload::make('face_embedding_id')
                     ->label('Face Embedding ID')
                     ->required()

@@ -21,7 +21,8 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         $this->call([
-        RoleSeeder::class,
+        // RoleSeeder::class,
+        PositionSeeder::class,
         // Seeder lain bisa ditambahkan di sini
     ]);
     }

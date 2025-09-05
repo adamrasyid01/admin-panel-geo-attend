@@ -18,6 +18,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('face_embedding_id')->default('not_registered');
+            $table->foreignId('position_id')->default(1)->constrained()->cascadeOnDelete();
             $table->rememberToken();
             $table->softDeletes();
             $table->timestamps();

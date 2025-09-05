@@ -100,9 +100,8 @@ class LeaveRequestResource extends Resource
                 Select::make('approved_by')
                     ->label('Disetujui Oleh')
                     ->relationship('approvedBy', 'name') // Menggunakan relasi yang sudah dibuat
-                    ->disabled() // Field ini tidak bisa diubah manual
-                    ->dehydrated() // Pastikan nilainya tetap tersimpan meski disabled
-                    // 3. SEMBUNYIKAN SECARA KONDISIONAL
+                    ->disabled()
+                    ->dehydrated()
                     ->hidden(fn(Get $get) => $get('status') !== 'approved'),
             ]);
     }

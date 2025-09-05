@@ -18,6 +18,10 @@ return new class extends Migration
             $table->text('content');
             $table->string('attachment_path');
             $table->boolean('is_published')->default(false);
+            $table->foreignId('created_by')
+                ->nullable()
+                ->constrained('users')
+                ->onDelete('set null'); // Jika user admin dihapus, ID-nya jadi null
             $table->timestamps();
             $table->softDeletes();
         });

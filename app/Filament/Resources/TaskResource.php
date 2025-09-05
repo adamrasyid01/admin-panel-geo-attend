@@ -13,6 +13,8 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
@@ -71,12 +73,48 @@ class TaskResource extends Resource
         return $table
             ->columns([
                 //
+                // Kolom untuk menampilkan nama tugas
+                TextColumn::make('name')
+                    ->label('Nama Tugas')
+                    ->searchable() // Bisa dicari
+                    ->sortable(), // Bisa diurutkan
+
+                // Kolom untuk menampilkan nama user yang ditugaskan
+                TextColumn::make('user.name')
+                    ->label('Ditugaskan Kepada')
+                    ->searchable()
+                    ->sortable(),
+
+                // Kolom untuk menampilkan tenggat waktu
+                TextColumn::make('deadline')
+                    ->label('Tenggat Waktu')
+                    ->dateTime('d M Y, H:i') // Format tampilan tanggal dan waktu
+                    ->sortable(),
+
+                // Kolom untuk menampilkan siapa yang membuat (disembunyikan default)
+                TextColumn::make('creator.name')
+                    ->label('Dibuat Oleh')
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true), // Bisa disembunyikan/ditampilkan
+
+                // Kolom untuk menampilkan kapan dibuat (disembunyikan default)
+                TextColumn::make('created_at')
+                    ->label('Tanggal Dibuat')
+                    ->dateTime('d M Y, H:i')
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //
+                SelectFilter::make('user_id')
+                    ->label('Ditugaskan Kepada')
+                    ->relationship('user', 'name')
+                    ->searchable()
+                    ->preload(),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
