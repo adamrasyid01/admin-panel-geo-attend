@@ -118,12 +118,18 @@ class UserResource extends Resource
                     ->searchable(), // Opsional, agar bisa di-searchr
                 TextColumn::make('face_embedding_id')
                     ->label('Face Embedding ID'),
+
+                TextColumn::make('position.name')
+                    ->label('Posisi Jabatan')
+                    ->sortable()
+                    ->searchable(),
             ])
             ->filters([
                 //
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

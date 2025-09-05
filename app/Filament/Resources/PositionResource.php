@@ -42,11 +42,18 @@ class PositionResource extends Resource
         return $table
             ->columns([
                 //
+                TextColumn::make('id')
+                    ->label('ID')
+                    ->searchable()
+                    ->sortable(),
                 TextColumn::make('name')
                     ->label('Nama Posisi')
                     ->searchable()
                     ->sortable(),
-
+                TextColumn::make('created_at')
+                    ->label('Dibuat Pada')
+                    ->dateTime('d/m/Y H:i')
+                    ->sortable(),
                 
             ])
             ->filters([
