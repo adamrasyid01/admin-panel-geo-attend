@@ -67,19 +67,32 @@ class UserResource extends Resource
                         $roleNames = Role::whereIn('id', $roleIds)->pluck('name');
                         return $roleNames->contains('Staff');
                     }),
+                Repeater::make('userCompanies')
+                    ->label('Tugaskan ke Lokasi Perusahaan')
+                    ->relationship()
+                    ->schema([
+                        Select::make('company_location_id')->relationship('companyLocation', 'name'),
+                    ])
+                    ->visible(function (callable $get) {
+                        $roleIds = $get('roles');
+                        if (empty($roleIds)) {
+                            return false;
+                        }
+                        return Role::whereIn('id', $roleIds)->where('name', 'Staff')->exists();
+                    }),
                 FileUpload::make('face_embedding_id')
                     ->label('Face Embedding ID')
                     ->required()
                     ->acceptedFileTypes(['image/*'])
                     ->maxSize(1024), // 1MB
 
-                Repeater::make('userShifts')
+                Repeater::make('userShifts')->label('Jadwal Staff')
                     ->relationship()
                     ->schema([
                         Select::make('shift_id')
                             ->relationship('shift', 'name')
                             ->required()
-                            ->label('Tambahkan Shift Karyawan'),
+                            ->label('Tambahkan Shift Staff'),
                     ])
                     ->visible(function (callable $get) {
                         $roleIds = $get('roles'); // array role_id dari select
@@ -91,8 +104,8 @@ class UserResource extends Resource
                         // Ambil semua nama role dari database
                         $roleNames = Role::where('id', $roleIds)->pluck('name');
 
-                        // Hanya tampilkan kalau salah satu role adalah "karyawan"
-                        return $roleNames->contains('karyawan');
+                        // Hanya tampilkan kalau salah satu role adalah "staff"
+                        return $roleNames->contains('Staff');
                     }),
 
             ]);
@@ -102,6 +115,10 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
+                TextColumn::make('id')
+                    ->label('User ID')
+                    ->searchable()
+                    ->sortable(),
                 TextColumn::make('name')
                     ->searchable()
                     ->sortable()
