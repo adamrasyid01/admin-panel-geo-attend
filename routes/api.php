@@ -10,7 +10,10 @@ use App\Http\Controllers\Api\NoteController;
 use App\Http\Controllers\Api\OjolController;
 use App\Http\Controllers\Api\OvertimeRequestController;
 use App\Http\Controllers\Api\PajakController;
+use App\Http\Controllers\Api\ShiftController;
+use App\Http\Controllers\Api\TaskController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\WfhRequestController;
 
 // AUTH API
 Route::name('auth.')->group(function () {
@@ -49,6 +52,19 @@ Route::prefix('overtime-requests')->middleware('auth:sanctum')->name('overtime-r
     Route::post('/', [OvertimeRequestController::class, 'createOvertimeRequest']);
 });
 
-// 
+// Shift 
+Route::prefix('shifts')->middleware('auth:sanctum')->name('shifts.')->group(function () {
+    Route::get('/', [ShiftController::class, 'show']);
+});
+
+// Task
+Route::prefix('tasks')->middleware('auth:sanctum')->name('tasks.')->group(function () {
+    Route::get('/', [TaskController::class, 'index']);
+});
+
+// WFH Request
+Route::prefix('wfh-requests')->middleware('auth:sanctum')->name('wfh-requests.')->group(function () {
+    Route::post('/', [WfhRequestController::class, 'store']);
+});
 
 
