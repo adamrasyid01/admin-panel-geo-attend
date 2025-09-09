@@ -56,9 +56,10 @@ class User extends Authenticatable
     public function role() : BelongsTo{
         return $this->belongsTo(Role::class, 'role_id');
     }
-    public function userShifts() : HasMany
+
+    public function userShifts() : BelongsToMany
     {
-        return $this->hasMany(UserShift::class, 'user_id');
+        return $this->belongsToMany(Shift::class, 'user_shifts', 'user_id', 'shift_id');
     }
     public function companyLocations() : HasMany
     {
@@ -124,5 +125,12 @@ class User extends Authenticatable
     public function tasksCreated() : HasMany
     {
         return $this->hasMany(Task::class, 'created_by');
+    }
+
+     public function assignedLocations(): BelongsToMany
+    {
+        // Format: belongsToMany(RelatedModel, pivot_table_name, foreign_key_of_this_model, foreign_key_of_related_model)
+        // Nama tabel pivot bisa dikosongkan jika mengikuti konvensi Laravel (company_location_user)
+        return $this->belongsToMany(CompanyLocation::class, 'user_company', 'user_id', 'company_location_id');
     }
 }

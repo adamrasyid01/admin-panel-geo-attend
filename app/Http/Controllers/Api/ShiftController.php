@@ -37,12 +37,15 @@ class ShiftController extends Controller
      * Display the specified resource.
      */
 
-    public function show()
+    public function show(Shift $shift)
     {
         $user = Auth::user();
 
         try {
-            $shift = Shift::where('user_id', $user->id)->first();
+            if ($shift->user_id !== $user->id) {
+                return ResponseFormatter::error('Unauthorized access to this shift.', 403);
+            }
+            
             return ResponseFormatter::success(new ShiftResource($shift), 'Shift retrieved successfully.');
         } catch (\Exception $e) {
             return ResponseFormatter::error($e->getMessage(), 'Failed to retrieve shift.', 500);
