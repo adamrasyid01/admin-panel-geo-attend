@@ -35,7 +35,7 @@ class ResponseFormatter
     /**
      * Give error response.
      */
-    public static function error($message = null, $code = 400)
+    public static function error($message = null, $code)
     {
         self::$response['meta']['status'] = 'error';
         self::$response['meta']['code'] = $code;

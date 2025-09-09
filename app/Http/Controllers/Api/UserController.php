@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    //
     public function login(Request $request)
     {
         try {
@@ -24,7 +23,7 @@ class UserController extends Controller
             $user = User::where('email', $request->email)->first();
 
             if (!$user || !Hash::check($request->password, $user->password)) {
-                return ResponseFormatter::error('Invalid email or password.');
+                return ResponseFormatter::error('Invalid email or password.', 401);
             }
 
             // Generate a token for the user
@@ -37,7 +36,7 @@ class UserController extends Controller
                 'user' => new UserResource($user)
             ]);
         } catch (Exception $e) {
-            return ResponseFormatter::error($e->getMessage());
+            return ResponseFormatter::error($e->getMessage(), 500);
         }
     }
 
@@ -46,9 +45,12 @@ class UserController extends Controller
             $request->user()->currentAccessToken()->delete;
             return ResponseFormatter::success([
                 'message' => 'Logout successful.'
+
             ]);
         } catch (Exception $e) {
-            return ResponseFormatter::error($e->getMessage());
+            return ResponseFormatter::error($e->getMessage(), 500);
         }
     }
+
+    
 }

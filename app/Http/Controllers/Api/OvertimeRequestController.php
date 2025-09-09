@@ -13,16 +13,22 @@ class OvertimeRequestController extends Controller
     //CREATE
     public function createOvertimeRequest(Request $request){
         $user = Auth::user();
+        
         $data = $request->validate([
-            'user_id' => 'required|exists:users,id',
             'date' => 'required|date',
             'start_time' => 'required|date_format:H:i',
             'end_time' => 'required|date_format:H:i|after:start_time',
             'reason' => 'nullable|string',
         ]);
+        $data['status'] = 'pending';
+        $data['user_id'] = $user->id;
 
-        $overtimeRequest = $user->overtimeRequests()->create($data);
-
-        return ResponseFormatter::success(new OvertimeRequestResource($overtimeRequest), 'Overtime request created successfully.');
+        try{
+            $overtimeRequest = $user->overtimeRequests()->create($data);
+            return ResponseFormatter::success(new OvertimeRequestResource($overtimeRequest), 'Overtime request created successfully.', 201);
+        } catch (\Exception $e) {
+            return ResponseFormatter::error($e->getMessage(), 'Failed to create overtime request.', 500);
+        }
+       
     }
 }

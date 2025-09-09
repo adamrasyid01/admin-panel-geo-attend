@@ -68,21 +68,5 @@ class AttendanceController extends Controller
         $attendance->update($data);
 
         return ResponseFormatter::success(new AttendanceResource($attendance), 'Attendance updated successfully.');
-    }
-
-    // POST Leave Request
-    public function createLeaveRequest(Request $request){
-        $user = Auth::user();
-
-        $data = $request->validate([
-            'leave_type' => 'required|string',
-            'start_date' => 'required|date',
-            'end_date' => 'required|date',
-            'reason' => 'required|string',
-        ]);
-
-        $leaveRequest = $user->leaveRequests()->create($data);
-
-        return ResponseFormatter::success(new LeaveRequestResource($leaveRequest), 'Leave request created successfully.');
-    }
+    }    
 }
