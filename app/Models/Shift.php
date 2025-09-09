@@ -18,9 +18,11 @@ class Shift extends Model
         'start_time',
         'end_time'
     ];
-    public function userShifts() : BelongsToMany
+   public function userShifts() : HasMany
     {
-        return $this->belongsToMany(User::class, 'user_shifts', 'shift_id', 'user_id');
+        return $this->hasMany(UserShift::class, 'shift_id');
     }
+
+    
 
 }
