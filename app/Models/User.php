@@ -27,6 +27,7 @@ class User extends Authenticatable
         'email',
         'password',
         'role_id',
+        'position_id',
         'face_embedding_id'
     ];
 
