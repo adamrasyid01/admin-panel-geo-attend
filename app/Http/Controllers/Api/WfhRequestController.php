@@ -30,8 +30,6 @@ class WfhRequestController extends Controller
         $data = $request->validate([
             'tanggal' => 'required|date',
             'reason' => 'nullable|string',
-            'start_time' => 'required|date_format:H:i',
-            'end_time' => 'required|date_format:H:i|after:start_time',
         ]);
         $data['status'] = 'pending';
         $data['user_id'] = Auth::user()->id;

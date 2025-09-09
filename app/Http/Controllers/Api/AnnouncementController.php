@@ -15,7 +15,6 @@ class AnnouncementController extends Controller
      */
     public function index()
     {
-        //
         try{
             $announcements = Announcement::all();
             return ResponseFormatter::success(AnnouncementResource::collection($announcements), 'Announcements retrieved successfully.');
