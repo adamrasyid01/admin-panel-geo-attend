@@ -19,7 +19,8 @@
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",
         "postare/blade-mdi": "^1.1",
-        "secondnetwork/blade-tabler-icons": "^3.34"
+        "secondnetwork/blade-tabler-icons": "^3.34",
+        "tymon/jwt-auth": "^2.2"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\AnnouncementController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AttendanceController;
+use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\DiskonController;
 use App\Http\Controllers\Api\LeaveRequestController;
 use App\Http\Controllers\Api\NoteController;
@@ -16,21 +17,22 @@ use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\WfhRequestController;
 
 // AUTH API
-Route::name('auth.')->group(function () {
-    Route::post('/login', [UserController::class, 'login']);
-    Route::middleware('auth:sanctum')->group(function () {
-        Route::post('/logout', [UserController::class, 'logout']);
-    });
+Route::post('login', [AuthController::class, 'login']);
+
+Route::middleware('auth:api')->group(function () {
+    Route::get('me', [AuthController::class, 'me']);
+    Route::post('logout', [AuthController::class, 'logout']);
+    Route::post('refresh', [AuthController::class, 'refresh']);
 });
 
 
 // Route Announcements
-Route::prefix('announcements')->middleware('auth:sanctum')->name('announcements.')->group(function () {
+Route::prefix('announcements')->middleware('auth:api')->name('announcements.')->group(function () {
     Route::get('/', [AnnouncementController::class, 'index']);
 });
 
 // Route Attendances
-Route::prefix('attendances')->middleware('auth:sanctum')->name('attendances.')->group(function () {
+Route::prefix('attendances')->middleware('auth:api')->name('attendances.')->group(function () {
     Route::get('/', [AttendanceController::class, 'index']);
     Route::get('/{attendance}', [AttendanceController::class, 'show']);
     Route::post('/check-in', [AttendanceController::class, 'checkIn']);

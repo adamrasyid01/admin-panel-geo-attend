@@ -47,38 +47,43 @@ class UserResource extends Resource
                     ->password(),
                 Select::make('roles')
                     ->relationship('roles', 'name')
-                    ->multiple()
+                    // ->multiple()
                     ->preload()
                     ->live(),
-                    
+
                 Select::make('position_id')
                     ->label('Posisi Jabatan')
-                    ->relationship('position', 'name') // Asumsi relasi 'position' ada di model User
+                    ->relationship('position', 'name')
                     ->searchable()
                     ->preload()
                     ->visible(function (callable $get) {
-                        $roleIds = $get('roles'); // Ambil ID role yang dipilih
+                        $roleIds = (array) $get('roles'); // pastikan array
 
                         if (empty($roleIds)) {
-                            return false; // Sembunyikan jika tidak ada role yang dipilih
+                            return false;
                         }
 
-                        // Cek ke database apakah salah satu role yang dipilih adalah 'karyawan'
                         $roleNames = Role::whereIn('id', $roleIds)->pluck('name');
                         return $roleNames->contains('Staff');
                     }),
+
                 Repeater::make('userCompanies')
                     ->label('Tugaskan ke Lokasi Perusahaan')
                     ->relationship()
                     ->schema([
-                        Select::make('company_location_id')->relationship('companyLocation', 'name'),
+                        Select::make('company_location_id')
+                            ->relationship('companyLocation', 'name'),
                     ])
                     ->visible(function (callable $get) {
-                        $roleIds = $get('roles');
+                        $roleIds = (array) $get('roles'); // pastikan array
+
                         if (empty($roleIds)) {
                             return false;
                         }
-                        return Role::whereIn('id', $roleIds)->where('name', 'Staff')->exists();
+
+                        return Role::whereIn('id', $roleIds)
+                            ->where('name', 'Staff')
+                            ->exists();
                     }),
                 FileUpload::make('face_embedding_id')
                     ->label('Face Embedding ID')
@@ -86,7 +91,8 @@ class UserResource extends Resource
                     ->acceptedFileTypes(['image/*'])
                     ->maxSize(1024), // 1MB
 
-                Repeater::make('userShifts')->label('Jadwal Staff')
+                Repeater::make('userShifts')
+                    ->label('Jadwal Staff')
                     ->relationship()
                     ->schema([
                         Select::make('shift_id')
@@ -95,19 +101,15 @@ class UserResource extends Resource
                             ->label('Tambahkan Shift Staff'),
                     ])
                     ->visible(function (callable $get) {
-                        $roleIds = $get('roles'); // array role_id dari select
+                        $roleIds = (array) $get('roles'); // pastikan array
 
                         if (empty($roleIds)) {
                             return false;
                         }
 
-                        // Ambil semua nama role dari database
-                        $roleNames = Role::where('id', $roleIds)->pluck('name');
-
-                        // Hanya tampilkan kalau salah satu role adalah "staff"
+                        $roleNames = Role::whereIn('id', $roleIds)->pluck('name');
                         return $roleNames->contains('Staff');
                     }),
-
             ]);
     }
 
