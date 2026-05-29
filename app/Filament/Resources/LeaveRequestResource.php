@@ -16,6 +16,7 @@ use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -72,9 +73,10 @@ class LeaveRequestResource extends Resource
                     ->rows(3),
                 FileUpload::make('attachment')
                     ->label('Lampiran')
+                    ->directory('leave-requests')
                     ->preserveFilenames()
                     ->acceptedFileTypes(['application/pdf', 'image/*'])
-                    ->maxFiles(5),
+                    ->maxFiles(1),
                 Select::make('status')
                     ->options([
                         'pending' => 'Pending',
@@ -116,6 +118,7 @@ class LeaveRequestResource extends Resource
                 TextColumn::make('type')->label('Tipe'),
                 TextColumn::make('start_date')->label('Tanggal Mulai'),
                 TextColumn::make('end_date')->label('Tanggal Selesai'),
+                TextColumn::make('reason')->label('Alasan')->limit(40),
                 TextColumn::make('status')
                     ->label('Status')
                     ->color(fn(string $state): string => match ($state) {
@@ -138,7 +141,20 @@ class LeaveRequestResource extends Resource
                     }),
             ])
             ->filters([
-                //
+                SelectFilter::make('status')
+                    ->label('Status')
+                    ->options([
+                        'pending' => 'Pending',
+                        'approved' => 'Approved',
+                        'rejected' => 'Rejected',
+                    ]),
+                SelectFilter::make('type')
+                    ->label('Tipe')
+                    ->options([
+                        'izin' => 'Izin',
+                        'cuti' => 'Cuti',
+                        'sakit' => 'Sakit',
+                    ]),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

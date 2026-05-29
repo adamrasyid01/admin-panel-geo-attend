@@ -64,7 +64,7 @@ class UserResource extends Resource
                         }
 
                         $roleNames = Role::whereIn('id', $roleIds)->pluck('name');
-                        return $roleNames->contains('Staff');
+                        return $roleNames->contains('karyawan');
                     }),
 
                 Repeater::make('userCompanies')
@@ -81,9 +81,8 @@ class UserResource extends Resource
                             return false;
                         }
 
-                        return Role::whereIn('id', $roleIds)
-                            ->where('name', 'Staff')
-                            ->exists();
+                        $roleNames = Role::whereIn('id', $roleIds)->pluck('name');
+                        return $roleNames->contains('karyawan');
                     }),
                 FileUpload::make('face_embedding_id')
                     ->label('Face Embedding ID')
@@ -108,7 +107,7 @@ class UserResource extends Resource
                         }
 
                         $roleNames = Role::whereIn('id', $roleIds)->pluck('name');
-                        return $roleNames->contains('Staff');
+                        return $roleNames->contains('karyawan');
                     }),
             ]);
     }

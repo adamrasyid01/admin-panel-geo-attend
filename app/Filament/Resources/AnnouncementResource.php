@@ -46,6 +46,7 @@ class AnnouncementResource extends Resource
                 Textarea::make('content')->label('Isi Pengumuman')
                     ->required(),
                 FileUpload::make('attachment_path')->label('Lampiran (Optional)')
+                    ->directory('announcements')
                     ->acceptedFileTypes(['application/pdf'])
                     ->maxSize(1024),
 
@@ -62,13 +63,17 @@ class AnnouncementResource extends Resource
                 //
                 TextColumn::make('title')->label('Judul Pengumuman')->searchable()->sortable(),
                 TextColumn::make('user.name')->label('Pembuat Pengumuman')->searchable()->sortable(),
-                TextColumn::make('content')->label('Isi'),
+                TextColumn::make('createdBy.name')->label('Dibuat Oleh')->default('-')->sortable(),
+                TextColumn::make('content')->label('Isi')->limit(50),
                 TextColumn::make('created_at')->label('Dibuat Pada')->dateTime('d/m/Y H:i')->sortable(),
                 ToggleColumn::make('is_published')->label('Umumkan ke Publik')->sortable(),
 
             ])
             ->filters([
-                //
+                Tables\Filters\TernaryFilter::make('is_published')
+                    ->label('Status Publikasi')
+                    ->trueLabel('Dipublikasikan')
+                    ->falseLabel('Draft'),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

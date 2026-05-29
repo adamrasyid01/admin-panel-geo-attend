@@ -9,6 +9,7 @@ use App\Models\OvertimeRequest;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TimePicker;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
@@ -16,6 +17,7 @@ use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -63,6 +65,10 @@ class OvertimeRequestResource extends Resource
                     ->native(false) 
                     ->displayFormat('H:i') 
                     ->seconds(false), 
+                Textarea::make('reason')
+                    ->label('Alasan Lembur')
+                    ->rows(3)
+                    ->columnSpanFull(),
                 Select::make('status')
                     ->options([
                         'pending' => 'Pending',
@@ -104,6 +110,7 @@ class OvertimeRequestResource extends Resource
                 TextColumn::make('date')->label('Tanggal Lembur'),
                 TextColumn::make('start_time')->label('Waktu Mulai Lembur')->dateTime('H:i'),
                 TextColumn::make('end_time')->label('Waktu Selesai Lembur')->dateTime('H:i'),
+                TextColumn::make('reason')->label('Alasan')->limit(40),
                 TextColumn::make('status')
                     ->label('Status')
                     ->color(fn(string $state): string => match ($state) {
@@ -126,7 +133,13 @@ class OvertimeRequestResource extends Resource
                     }),
             ])
             ->filters([
-                //
+                SelectFilter::make('status')
+                    ->label('Status')
+                    ->options([
+                        'pending' => 'Pending',
+                        'approved' => 'Approved',
+                        'rejected' => 'Rejected',
+                    ]),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

@@ -15,9 +15,10 @@ class WfhRequestResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            'id' => $this->id,
             'user_id' => $this->user_id,
             'tanggal' => $this->tanggal,
-            'alasan' => $this->reason,
+            'reason' => $this->reason,
             'status' => $this->status,
             'approved_by' => $this->approved_by,
             'admin_notes' => $this->admin_notes,

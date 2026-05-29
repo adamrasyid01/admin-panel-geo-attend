@@ -17,6 +17,7 @@ use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -78,11 +79,13 @@ class WfhRequestResource extends Resource
                 Textarea::make('admin_notes')
                     ->label('Catatan Admin')
                     ->columnSpanFull() // Agar field ini memakan lebar penuh
+                    ->live()
+                    ->afterStateUpdated(fn (Set $set, $state) => $set('notes_by', filled($state) ? Auth::id() : null))
                     ->hiddenOn('create'),
                 Select::make('approved_by')
                     ->label('Disetujui Oleh')
                     ->relationship('approvedBy', 'name') // Menggunakan relasi yang sudah dibuat
-
+                    ->disabled()
                     ->dehydrated() // Pastikan nilainya tetap tersimpan meski disabled
                     // 3. SEMBUNYIKAN SECARA KONDISIONAL
                     ->hidden(fn(Get $get) => $get('status') !== 'approved'),
@@ -97,6 +100,7 @@ class WfhRequestResource extends Resource
                         modifyQueryUsing: fn(Builder $query) => $query->whereHas('roles', fn(Builder $query) => $query->where('name', 'super_admin'))
                     )
                     ->dehydrated() // Pastikan nilainya tetap tersimpan meski disabled
+                    ->disabled()
                     ->hidden(fn(Get $get) => empty($get('admin_notes'))), // Hanya tampilkan jika ada catatan
 
             ]);
@@ -109,6 +113,8 @@ class WfhRequestResource extends Resource
                 //
                 TextColumn::make('id')->label('No'),
                 TextColumn::make('user.name')->label('Karyawan'),
+                TextColumn::make('tanggal')->label('Tanggal WFH')->date('d/m/Y')->sortable(),
+                TextColumn::make('reason')->label('Alasan')->limit(40),
                 TextColumn::make('status')
                     ->label('Status')
                     ->color(fn(string $state): string => match ($state) {
@@ -129,9 +135,17 @@ class WfhRequestResource extends Resource
                         // Jalankan logika seperti biasa jika ada record
                         return $record->status !== 'approved';
                     }),
+                TextColumn::make('admin_notes')->label('Catatan Admin')->limit(40)->toggleable(),
+                TextColumn::make('notesBy.name')->label('Pemberi Catatan')->default('-')->toggleable(),
             ])
             ->filters([
-                //
+                SelectFilter::make('status')
+                    ->label('Status')
+                    ->options([
+                        'pending' => 'Pending',
+                        'approved' => 'Approved',
+                        'rejected' => 'Rejected',
+                    ]),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

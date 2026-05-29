@@ -4,10 +4,11 @@ namespace App\Http\Controllers\Api;
 
 use App\Helpers\ResponseFormatter;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\CheckInAttendanceRequest;
+use App\Http\Requests\Api\CheckOutAttendanceRequest;
 use App\Http\Resources\Api\AttendanceResource;
 use App\Http\Resources\Api\LeaveRequestResource;
 use App\Models\Attendance;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class AttendanceController extends Controller
@@ -33,39 +34,24 @@ class AttendanceController extends Controller
     }
 
     // Simpan check-in baru
-    public function checkIn(Request $request)
+    public function checkIn(CheckInAttendanceRequest $request)
     {
         $user = Auth::user();
 
-        // Logika validasi dan penyimpanan data absensi dari Flutter
-        $data = $request->validate([
-            'user_id' => 'required|exists:users,id',
-            'user_shift_id' => 'required|exists:user_shifts,id',
-            'photo' => 'required|string',
-            'check_in_time' => 'required|date',
-            'check_in_location' => 'required|string',
-            'status' => 'required|string',
-        ]);
-
-        $attendance = $user->attendances()->create($data);
+        $attendance = $user->attendances()->create($request->validated());
 
         return ResponseFormatter::success(new AttendanceResource($attendance), 'Attendance created successfully.');
     }
 
     // simpan checkout
-    public function checkOut(Request $request, Attendance $attendance)
+    public function checkOut(CheckOutAttendanceRequest $request, Attendance $attendance)
     {
         // Pastikan pengguna yang login adalah pemilik absensi ini
         if ($attendance->user_id !== Auth::id()) {
             return ResponseFormatter::error('Unauthorized.', 403);
         }
 
-        $data = $request->validate([
-            'check_out_time' => 'required|date',
-            'check_out_location' => 'required|string',
-        ]);
-
-        $attendance->update($data);
+        $attendance->update($request->validated());
 
         return ResponseFormatter::success(new AttendanceResource($attendance), 'Attendance updated successfully.');
     }    
