@@ -16,6 +16,7 @@ class ShiftController extends Controller
     /**
      * Display a listing of the resource.
      */
+
     public function index()
     {
         try {
@@ -61,8 +62,8 @@ class ShiftController extends Controller
     public function show(string $id)
     {
         try {
+            // Fungsi untuk memastikan hanya admin atau user yang terkait dengan shift yang bisa melihat detailnya
             $shift = Shift::findOrFail($id);
-
             if (!$this->canAccessShift($shift, 'view_shift')) {
                 return ResponseFormatter::error('Unauthorized.', 403);
             }
