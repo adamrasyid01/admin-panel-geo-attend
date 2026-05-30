@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\ServiceProvider;
+
 return [
 
     /*
@@ -123,4 +125,10 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    'providers' => ServiceProvider::defaultProviders()->merge([
+        Illuminate\View\ViewServiceProvider::class,
+
+        App\Providers\AppServiceProvider::class,
+    ])->toArray(),
+    // configuration lain bisa ditambahkan di sini
 ];
